@@ -30,7 +30,6 @@ public class Bullet : MonoBehaviour
     {
         if (shotBy == shooter.player)
         {
-            print(collision.gameObject.name + " " + Time.time);
             Enemy enemy = collision.gameObject.GetComponentInParent<Enemy>();
             if (enemy)
             {

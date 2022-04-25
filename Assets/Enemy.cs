@@ -8,9 +8,9 @@ public class Enemy : MonoBehaviour
     public Transform body;
     public Transform head;
     public Transform gun;
-    public Transform gunCenter;
 
     public float rotationSpeed;
+    public float gunRotMag;
 
     public NavMeshAgent agent;
     public Transform target;
@@ -44,25 +44,30 @@ public class Enemy : MonoBehaviour
         Vector3 headDir = target.position - head.position;
         Vector3 gunDir = target.position - gun.position;
 
-        body.rotation = Quaternion.Slerp(body.rotation, Quaternion.LookRotation(bodyDir), rotationSpeed * Time.deltaTime);
-        head.rotation = Quaternion.Slerp(head.rotation, Quaternion.LookRotation(headDir), rotationSpeed * Time.deltaTime);
-        gun.rotation = Quaternion.Slerp(gun.rotation, Quaternion.LookRotation(gunDir), rotationSpeed * Time.deltaTime);
+        Quaternion bodyRot = Quaternion.LookRotation(bodyDir.normalized);
+        body.rotation = Quaternion.Slerp(body.rotation, bodyRot, rotationSpeed * Time.deltaTime); ;
+        head.rotation = Quaternion.Slerp(head.rotation, Quaternion.LookRotation(headDir.normalized), rotationSpeed * Time.deltaTime);
+
+        if (Mathf.Abs(body.rotation.eulerAngles.magnitude - bodyRot.eulerAngles.magnitude) < gunRotMag)
+        {
+            gun.rotation = Quaternion.Slerp(gun.rotation, Quaternion.LookRotation(gunDir.normalized), rotationSpeed * Time.deltaTime);
+
+            if (Time.time >= nextTimeToFire)
+            {
+                Shoot();
+
+                nextTimeToFire = Time.time + 1f / fireRate;
+            }
+        }
 
         Vector3 gunRot = gun.localEulerAngles;
         gunRot.z = 0;
         gun.localEulerAngles = gunRot;
-
-        if (Time.time >= nextTimeToFire)
-        {
-            Shoot();
-
-            nextTimeToFire = Time.time + 1f / fireRate;
-        }
     }
 
     void Shoot()
     {
-        Vector3 dir = shootPoint.forward;//target.position - shootPoint.position;
+        Vector3 dir = shootPoint.up;//target.position - shootPoint.position;
 
         GameObject newBullet = Instantiate(bullet, shootPoint.position, Quaternion.identity);
         newBullet.GetComponent<Bullet>().damage = damage;
@@ -81,6 +86,5 @@ public class Enemy : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        print("HEALTH: " + health);
     }
 }
