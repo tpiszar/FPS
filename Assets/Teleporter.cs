@@ -5,6 +5,9 @@ using UnityEngine;
 public class Teleporter : MonoBehaviour
 {
     public Transform player;
+    public float rotationSpeed = 10f;
+    public Transform box;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +17,9 @@ public class Teleporter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Vector3 rot = box.localEulerAngles;
+        rot.y += rotationSpeed * Time.deltaTime;
+        box.localEulerAngles = rot;
     }
 
     private void OnTriggerEnter(Collider other)
