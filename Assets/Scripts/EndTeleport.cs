@@ -38,10 +38,8 @@ public class EndTeleport : MonoBehaviour
     public void Activate()
     {
         keys++;
-        print(keys);
         if (keys >= requiredKeys)
         {
-            print("on");
             mesh.material = mat;
             pointLight.SetActive(true);
             on = true;

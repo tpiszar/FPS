@@ -14,6 +14,7 @@ public class UI : MonoBehaviour
     public GameObject next;
     public GameObject replay;
     public GameObject unpause;
+    public Animator animator;
 
     string sceneName;
 
@@ -77,7 +78,9 @@ public class UI : MonoBehaviour
 
     public void SelectScene(string name)
     {
-        //animation
+        animator.Play("FadeOut");
+        Time.timeScale = 1f;
+        sceneName = name;
         Invoke("LoadScene", 1f);
     }
 
