@@ -17,6 +17,7 @@ public class Key : MonoBehaviour
         Movement player = other.gameObject.GetComponent<Movement>();
         if (player)
         {
+            Music.music.PickUp();
             end.Activate();
             Destroy(this.gameObject);
         }

@@ -16,6 +16,8 @@ public class Gun : MonoBehaviour
 
     private float nextTimeToFire = 0f;
 
+    public AudioSource fire;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +30,7 @@ public class Gun : MonoBehaviour
         if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
         {
             Shoot();
-
+            fire.Play();
             nextTimeToFire = Time.time + 1f / fireRate;
         }
     }

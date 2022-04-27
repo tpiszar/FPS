@@ -18,6 +18,8 @@ public class UI : MonoBehaviour
     public GameObject endCover;
     public Animator animator;
 
+    public AudioSource click;
+
     string sceneName;
 
     // Start is called before the first frame update
@@ -60,6 +62,7 @@ public class UI : MonoBehaviour
 
     public void TogglePause()
     {
+        click.Play();
         if (isPaused)
         {
             //unpause
@@ -85,6 +88,7 @@ public class UI : MonoBehaviour
 
     public void SelectScene(string name)
     {
+        click.Play();
         Time.timeScale = 1f;
         animator.Play("FadeOut");
         sceneName = name;

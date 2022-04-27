@@ -26,6 +26,8 @@ public class Runner : MonoBehaviour
     public float checkTime;
     float nextCheck;
 
+    public AudioSource detect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +69,7 @@ public class Runner : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) < detectDist)
         {
             running = true;
+            detect.Play();
             Run();
         }
         else
@@ -117,6 +120,7 @@ public class Runner : MonoBehaviour
         }
         else
         {
+            detect.Play();
             Run();
         }
     }

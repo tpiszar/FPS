@@ -17,6 +17,8 @@ public class EndTeleport : MonoBehaviour
     public int requiredKeys;
     int keys = 0;
 
+    public AudioSource activate;
+    public AudioSource warp;
 
     public UI canvas;
     // Start is called before the first frame update
@@ -41,6 +43,7 @@ public class EndTeleport : MonoBehaviour
         keys++;
         if (keys >= requiredKeys)
         {
+            activate.Play();
             mesh.material = mat;
             orb.SetActive(true);
             pointLight.SetActive(true);
@@ -52,7 +55,9 @@ public class EndTeleport : MonoBehaviour
     {
         if (on)
         {
+            warp.Play();
             canvas.End(true);
+            on = false;
         }
     }
 }

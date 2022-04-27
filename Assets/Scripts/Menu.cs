@@ -10,22 +10,27 @@ public class Menu : MonoBehaviour
 
     public Animator animator;
 
+    public AudioSource click;
+
     string sceneName;
 
     public void SelectPage(int page)
     {
+        click.Play();
         pages[0].SetActive(false);
         pages[page].SetActive(true);
     }
 
     public void Back(int curPage)
     {
+        click.Play();
         pages[curPage].SetActive(false);
         pages[0].SetActive(true);
     }
 
     public void SelectScene(string name)
     {
+        click.Play();
         animator.Play("FadeOut");
         Time.timeScale = 1f;
         sceneName = name;
@@ -39,6 +44,7 @@ public class Menu : MonoBehaviour
 
     public void OnApplicationQuit()
     {
+        click.Play();
         Application.Quit();
     }
 }

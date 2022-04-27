@@ -11,6 +11,8 @@ public class Teleporter : MonoBehaviour
     bool wait = false;
     float delay;
 
+    public AudioSource teleport;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +42,7 @@ public class Teleporter : MonoBehaviour
             Bullet playerBullet = other.GetComponent<Bullet>();
             if (playerBullet && playerBullet.shotBy == Bullet.shooter.player)
             {
+                teleport.Play();
                 player.position = transform.position;
                 player.GetComponent<Movement>().enabled = false;
                 Invoke("enableMove", .1f);

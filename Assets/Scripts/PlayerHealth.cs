@@ -9,9 +9,12 @@ public class PlayerHealth : MonoBehaviour
     public Slider healthBar;
     public int health = 100;
 
+    public AudioSource damage;
+
     public void TakeDamage(int amount)
     {
         health -= amount;
+        damage.Play();
         if (health <= 0)
         {
             health = 0;

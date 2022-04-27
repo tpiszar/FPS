@@ -39,6 +39,9 @@ public class Enemy : MonoBehaviour
 
     private float nextTimeToFire = 0f;
 
+    public AudioSource fire;
+    public AudioSource detect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -89,6 +92,7 @@ public class Enemy : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, target.position) < startDetect)
         {
+            detect.Play();
             currentState = state.shooting;
         }
         else
@@ -171,7 +175,7 @@ public class Enemy : MonoBehaviour
             if (Time.time >= nextTimeToFire)
             {
                 Shoot();
-
+                fire.Play();
                 nextTimeToFire = Time.time + 1f / fireRate;
             }
         }
@@ -202,7 +206,11 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int amount)
     {
         health -= amount;
-        currentState = state.shooting;
+        if (currentState == state.idle)
+        {
+            detect.Play();
+            currentState = state.shooting;
+        }
         if (health <= 0)
         {
             Destroy(this.gameObject);
