@@ -6,6 +6,7 @@ public class EndTeleport : MonoBehaviour
 {
     public MeshRenderer mesh;
     public Material mat;
+    public GameObject orb;
     public GameObject pointLight;
 
     public Transform player;
@@ -41,6 +42,7 @@ public class EndTeleport : MonoBehaviour
         if (keys >= requiredKeys)
         {
             mesh.material = mat;
+            orb.SetActive(true);
             pointLight.SetActive(true);
             on = true;
         }

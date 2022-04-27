@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class UI : MonoBehaviour
 {
     bool isPaused = false;
+    bool end = false;
 
     public TextMeshProUGUI resultsTxt;
     public GameObject results;
@@ -14,6 +15,7 @@ public class UI : MonoBehaviour
     public GameObject next;
     public GameObject replay;
     public GameObject unpause;
+    public GameObject endCover;
     public Animator animator;
 
     string sceneName;
@@ -21,7 +23,7 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -35,20 +37,25 @@ public class UI : MonoBehaviour
 
     public void End(bool win)
     {
-        Time.timeScale = 0;
-        Cursor.lockState = CursorLockMode.None;
-        if (win)
+        if (!end)
         {
-            resultsTxt.text = "Victory";
-            next.SetActive(true);
+            endCover.SetActive(true);
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            if (win)
+            {
+                resultsTxt.text = "Victory";
+                next.SetActive(true);
+            }
+            else
+            {
+                resultsTxt.text = "You Died";
+                replay.SetActive(true);
+            }
+            results.SetActive(true);
+            menu.SetActive(true);
+            end = true;
         }
-        else
-        {
-            resultsTxt.text = "You Died";
-            replay.SetActive(true);
-        }
-        results.SetActive(true);
-        menu.SetActive(true);
     }
 
     public void TogglePause()
@@ -78,8 +85,8 @@ public class UI : MonoBehaviour
 
     public void SelectScene(string name)
     {
-        animator.Play("FadeOut");
         Time.timeScale = 1f;
+        animator.Play("FadeOut");
         sceneName = name;
         Invoke("LoadScene", 1f);
     }
@@ -89,3 +96,4 @@ public class UI : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 }
+
